@@ -63,6 +63,20 @@ function spawnNewTile() {
     $(`#${randomTileCoords[0]}${randomTileCoords[1]}`).text(newTileValue);
 }
 
+// function tileColorUpdate() {
+//     let allTiles = $("#gameBoard td");
+//     console.log(allTiles);
+//     for (tile of allTiles) {
+//         tileValue = tile.textContent;
+//         tile.className = "blank";
+//         console.log(tile);
+//         if (tileValue != "") {
+//             tile.classList.add(`tile-${tileValue}`);
+//         }
+//     }
+//   //  return allTiles;
+// }
+
 // function gameOver() {
 //     alert("No more legal moves! Please start a new game.");
 // }
