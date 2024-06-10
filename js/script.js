@@ -1,9 +1,11 @@
+let score = 0;
 $(document).ready(function() {
     // Initialize the game grid
     initializeGrid();
 
     // Add initial numbers
     addInitialNumber();
+    addNewNumber();
 
     // Handle keydown events
     $(document).keydown(function(event) {
@@ -30,6 +32,11 @@ $(document).ready(function() {
                 }, 1000);
             }
         }
+    });
+
+    // Reset the game
+    $('#reset-button').click(function() {
+        resetGame();
     });
 });
 
@@ -68,6 +75,26 @@ function addNewNumber() {
         const newValue = Math.random() < 0.80 ? 2 : 4;
         $('#cell-' + randomIndex).text(newValue).attr('class', 'grid-cell number-' + newValue);
     }
+}
+
+/**
+ * Updates the score display.
+ */
+function updateScore() {
+    $('#score').text(score);
+}
+
+/**
+ * Resets the game by clearing the grid and adding initial numbers.
+ */
+function resetGame() {
+    score = 0; 
+    updateScore(); 
+    for (let i = 0; i < 16; i++) {
+        $('#cell-' + i).text("").attr('class', 'grid-cell');
+    }
+    addInitialNumber();
+    addNewNumber();
 }
 
 /**
@@ -191,6 +218,9 @@ function merge(cells) {
             let newValue = cells.shift() * 2;
             merged.push(newValue);
             cells.shift();
+            // Add the merged value to the score
+            score += newValue;
+            updateScore();
             if (newValue === 2048) { 
                 setTimeout(() => { alert("Congratulations! You win!"); }, 100);
             }
