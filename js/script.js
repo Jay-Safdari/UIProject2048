@@ -25,44 +25,48 @@ $(document).ready(function() {
         if (moved) {
             addNewNumber();
             if (checkGameOver()) {
-                alert("Game Over!");
+                setTimeout(() => {
+                    alert("Game Over!");
+                }, 1000);
             }
         }
     });
 });
 
 /**
- * Initializes the game grid by creating a 3x3 grid with unique IDs for each cell.
+ * Initializes the game grid by creating a 4x4 grid with unique IDs for each cell.
  */
 function initializeGrid() {
     const gridContainer = $('#grid-container');
-    for (let index = 0; index < 9; index++) {
+    for (let index = 0; index < 16; index++) {
         const gridCell = $('<div/>').addClass('grid-cell').attr('id', 'cell-' + index);
         gridContainer.append(gridCell);
     }
 }
 
 /**
- * Adds an initial number (2) to a random cell in the grid.
+ * Adds an initial number (2 or 4) to a random cell in the grid.
  */
 function addInitialNumber() {
-    const randomCell = Math.floor(Math.random() * 9);
-    $('#cell-' + randomCell).text(2);
+    const randomCell = Math.floor(Math.random() * 16);
+    const initialValue = Math.random() < 0.80 ? 2 : 4;
+    $('#cell-' + randomCell).text(initialValue).attr('class', 'grid-cell number-' + initialValue);
 }
 
 /**
- * Adds a new number (2) to a random empty cell in the grid.
+ * Adds a new number (2 or 4) to a random empty cell in the grid.
  */
 function addNewNumber() {
     let emptyCells = [];
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 16; i++) {
         if ($('#cell-' + i).text() === "") {
             emptyCells.push(i);
         }
     }
     if (emptyCells.length > 0) {
         const randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-        $('#cell-' + randomIndex).text(2);
+        const newValue = Math.random() < 0.80 ? 2 : 4;
+        $('#cell-' + randomIndex).text(newValue).attr('class', 'grid-cell number-' + newValue);
     }
 }
 
@@ -72,20 +76,22 @@ function addNewNumber() {
  */
 function moveUp() {
     let moved = false;
-    for (let col = 0; col < 3; col++) {
+    for (let col = 0; col < 4; col++) {
         let cells = [];
-        for (let row = 0; row < 3; row++) {
-            let cell = $('#cell-' + (row * 3 + col)).text();
+        for (let row = 0; row < 4; row++) {
+            let cell = $('#cell-' + (row * 4 + col)).text();
             if (cell !== "") {
                 cells.push(parseInt(cell));
             }
         }
         cells = merge(cells);
-        for (let row = 0; row < 3; row++) {
-            if ($('#cell-' + (row * 3 + col)).text() !== (cells[row] || "").toString()) {
+        for (let row = 0; row < 4; row++) {
+            if ($('#cell-' + (row * 4 + col)).text() !== (cells[row] || "").toString()) {
                 moved = true;
             }
-            $('#cell-' + (row * 3 + col)).text(cells[row] || "");
+            $('#cell-' + (row * 4 + col))
+                .text(cells[row] || "")
+                .attr('class', 'grid-cell ' + (cells[row] ? 'number-' + cells[row] : ''));
         }
     }
     return moved;
@@ -97,20 +103,22 @@ function moveUp() {
  */
 function moveDown() {
     let moved = false;
-    for (let col = 0; col < 3; col++) {
+    for (let col = 0; col < 4; col++) {
         let cells = [];
-        for (let row = 2; row >= 0; row--) {
-            let cell = $('#cell-' + (row * 3 + col)).text();
+        for (let row = 3; row >= 0; row--) {
+            let cell = $('#cell-' + (row * 4 + col)).text();
             if (cell !== "") {
                 cells.push(parseInt(cell));
             }
         }
         cells = merge(cells);
-        for (let row = 2; row >= 0; row--) {
-            if ($('#cell-' + (row * 3 + col)).text() !== (cells[2 - row] || "").toString()) {
+        for (let row = 3; row >= 0; row--) {
+            if ($('#cell-' + (row * 4 + col)).text() !== (cells[3 - row] || "").toString()) {
                 moved = true;
             }
-            $('#cell-' + (row * 3 + col)).text(cells[2 - row] || "");
+            $('#cell-' + (row * 4 + col))
+                .text(cells[3 - row] || "")
+                .attr('class', 'grid-cell ' + (cells[3 - row] ? 'number-' + cells[3 - row] : ''));
         }
     }
     return moved;
@@ -122,20 +130,22 @@ function moveDown() {
  */
 function moveLeft() {
     let moved = false;
-    for (let row = 0; row < 3; row++) {
+    for (let row = 0; row < 4; row++) {
         let cells = [];
-        for (let col = 0; col < 3; col++) {
-            let cell = $('#cell-' + (row * 3 + col)).text();
+        for (let col = 0; col < 4; col++) {
+            let cell = $('#cell-' + (row * 4 + col)).text();
             if (cell !== "") {
                 cells.push(parseInt(cell));
             }
         }
         cells = merge(cells);
-        for (let col = 0; col < 3; col++) {
-            if ($('#cell-' + (row * 3 + col)).text() !== (cells[col] || "").toString()) {
+        for (let col = 0; col < 4; col++) {
+            if ($('#cell-' + (row * 4 + col)).text() !== (cells[col] || "").toString()) {
                 moved = true;
             }
-            $('#cell-' + (row * 3 + col)).text(cells[col] || "");
+            $('#cell-' + (row * 4 + col))
+                .text(cells[col] || "")
+                .attr('class', 'grid-cell ' + (cells[col] ? 'number-' + cells[col] : ''));
         }
     }
     return moved;
@@ -147,20 +157,22 @@ function moveLeft() {
  */
 function moveRight() {
     let moved = false;
-    for (let row = 0; row < 3; row++) {
+    for (let row = 0; row < 4; row++) {
         let cells = [];
-        for (let col = 2; col >= 0; col--) {
-            let cell = $('#cell-' + (row * 3 + col)).text();
+        for (let col = 3; col >= 0; col--) {
+            let cell = $('#cell-' + (row * 4 + col)).text();
             if (cell !== "") {
                 cells.push(parseInt(cell));
             }
         }
         cells = merge(cells);
-        for (let col = 2; col >= 0; col--) {
-            if ($('#cell-' + (row * 3 + col)).text() !== (cells[2 - col] || "").toString()) {
+        for (let col = 3; col >= 0; col--) {
+            if ($('#cell-' + (row * 4 + col)).text() !== (cells[3 - col] || "").toString()) {
                 moved = true;
             }
-            $('#cell-' + (row * 3 + col)).text(cells[2 - col] || "");
+            $('#cell-' + (row * 4 + col))
+                .text(cells[3 - col] || "")
+                .attr('class', 'grid-cell ' + (cells[3 - col] ? 'number-' + cells[3 - col] : ''));
         }
     }
     return moved;
@@ -176,13 +188,17 @@ function merge(cells) {
     let merged = [];
     while (cells.length > 0) {
         if (cells.length > 1 && cells[0] === cells[1]) {
-            merged.push(cells.shift() * 2);
+            let newValue = cells.shift() * 2;
+            merged.push(newValue);
             cells.shift();
+            if (newValue === 2048) { 
+                setTimeout(() => { alert("Congratulations! You win!"); }, 100);
+            }
         } else {
             merged.push(cells.shift());
         }
     }
-    while (merged.length < 3) {
+    while (merged.length < 4) {
         merged.push("");
     }
     return merged;
@@ -194,26 +210,26 @@ function merge(cells) {
  */
 function checkGameOver() {
     // Check for any empty cells
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 16; i++) {
         if ($('#cell-' + i).text() === "") {
             return false;
         }
     }
 
     // Check for any possible merges
-    for (let row = 0; row < 3; row++) {
-        for (let col = 0; col < 3; col++) {
-            let current = $('#cell-' + (row * 3 + col)).text();
-            if (row > 0 && current === $('#cell-' + ((row - 1) * 3 + col)).text()) {
+    for (let row = 0; row < 4; row++) {
+        for (let col = 0; col < 4; col++) {
+            let current = $('#cell-' + (row * 4 + col)).text();
+            if (row > 0 && current === $('#cell-' + ((row - 1) * 4 + col)).text()) {
                 return false;
             }
-            if (row < 2 && current === $('#cell-' + ((row + 1) * 3 + col)).text()) {
+            if (row < 3 && current === $('#cell-' + ((row + 1) * 4 + col)).text()) {
                 return false;
             }
-            if (col > 0 && current === $('#cell-' + (row * 3 + col - 1)).text()) {
+            if (col > 0 && current === $('#cell-' + (row * 4 + col - 1)).text()) {
                 return false;
             }
-            if (col < 2 && current === $('#cell-' + (row * 3 + col + 1)).text()) {
+            if (col < 3 && current === $('#cell-' + (row * 4 + col + 1)).text()) {
                 return false;
             }
         }

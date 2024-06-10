@@ -12,8 +12,8 @@ main{
 }
 
 #game-container {
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
     background-color: #bbada0;
     border-radius: 10px;
     position: relative;
@@ -25,8 +25,8 @@ main{
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-template-rows: repeat(3,1fr);
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(4,1fr);
     gap: 10px;
 }
 
@@ -42,3 +42,15 @@ main{
     font-weight: bold;
     color: #776e65;
 }
+
+.number-2 { background-color: #eee4da; }
+.number-4 { background-color: #ede0c8; }
+.number-8 { background-color: #f2b179; }
+.number-16 { background-color: #f59563; }
+.number-32 { background-color: #f67c5f; }
+.number-64 { background-color: #f65e3b; }
+.number-128 { background-color: #edcf72; }
+.number-256 { background-color: #edcc61; }
+.number-512 { background-color: #edc850; }
+.number-1024 { background-color: #edc53f; }
+.number-2048 { background-color: #edc22e; }
