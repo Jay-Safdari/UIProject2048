@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+header {
+    margin-bottom: 2em;
+}
+
+.score-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    border: 10px solid #a79a8e;
+}
+
+.row {
+    display: flex;
+}
+
+.cell {
+    width: 4em;
+    height: 4em;
+    background-color: #e6dace;
+    border: 5px solid #a79a8e;
+    text-align: center;
+    line-height: 4em;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #676058;
+}
+
+
