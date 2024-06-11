@@ -6,7 +6,6 @@ $(document).ready(function() {
     // Add initial numbers
     addNewNumber();
     addNewNumber();
-    //sdfsdf
 
     // Handle keydown events
     $(document).keydown(function(event) {
@@ -57,11 +56,13 @@ function initializeGrid() {
  */
 function addNewNumber() {
     let emptyCells = [];
+    // Loop through all cells to find empty ones
     for (let i = 0; i < 16; i++) {
         if ($('#cell-' + i).text() === "") {
             emptyCells.push(i);
         }
     }
+    // If there are any empty cells, add a new number to one of them
     if (emptyCells.length > 0) {
         const randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         const newValue = Math.random() < 0.80 ? 2 : 4;
@@ -95,19 +96,30 @@ function resetGame() {
  */
 function moveUp() {
     let moved = false;
+
+    // Loop through each column
     for (let col = 0; col < 4; col++) {
         let cells = [];
+
+        // Collect non-empty cells in the current column
         for (let row = 0; row < 4; row++) {
             let cell = $('#cell-' + (row * 4 + col)).text();
             if (cell !== "") {
                 cells.push(parseInt(cell));
             }
         }
+
         cells = merge(cells);
+
+        // Update the grid with merged values
         for (let row = 0; row < 4; row++) {
+            
+            // Check if the current cell value is different from the new value
             if ($('#cell-' + (row * 4 + col)).text() !== (cells[row] || "").toString()) {
                 moved = true;
             }
+
+            // Update the cell with the new value and assign the corresponding CSS class
             $('#cell-' + (row * 4 + col))
                 .text(cells[row] || "")
                 .attr('class', 'grid-cell ' + (cells[row] ? 'number-' + cells[row] : ''));
@@ -122,8 +134,12 @@ function moveUp() {
  */
 function moveDown() {
     let moved = false;
+
+    // Loop through each column
     for (let col = 0; col < 4; col++) {
         let cells = [];
+
+        // Collect non-empty cells in the current column from bottom to top
         for (let row = 3; row >= 0; row--) {
             let cell = $('#cell-' + (row * 4 + col)).text();
             if (cell !== "") {
@@ -203,23 +219,33 @@ function moveRight() {
  * @returns {Array} - Merged array with combined values and empty spaces.
  */
 function merge(cells) {
+    // If there are no cells, return the empty array
     if (cells.length === 0) return cells;
+
     let merged = [];
+    
+    // Loop through the cells and merge adjacent cells with the same value
     while (cells.length > 0) {
         if (cells.length > 1 && cells[0] === cells[1]) {
+
+            // If the first two cells have the same value, merge them
             let newValue = cells.shift() * 2;
             merged.push(newValue);
             cells.shift();
             // Add the merged value to the score
             score += newValue;
             updateScore();
+
+
             if (newValue === 2048) { 
-                setTimeout(() => { alert("Congratulations! You win!"); }, 100);
+                setTimeout(() => { alert("Congratulations! You win!"); }, 1000);
             }
         } else {
+            // If the first two cells do not have the same value, move the first cell to the merged array
             merged.push(cells.shift());
         }
     }
+    // Fill the remaining spaces with empty strings to maintain the grid size
     while (merged.length < 4) {
         merged.push("");
     }
@@ -242,15 +268,23 @@ function checkGameOver() {
     for (let row = 0; row < 4; row++) {
         for (let col = 0; col < 4; col++) {
             let current = $('#cell-' + (row * 4 + col)).text();
+
+            // Check if the current cell can merge with the cell above
             if (row > 0 && current === $('#cell-' + ((row - 1) * 4 + col)).text()) {
                 return false;
             }
+
+            // Check if the current cell can merge with the cell below
             if (row < 3 && current === $('#cell-' + ((row + 1) * 4 + col)).text()) {
                 return false;
             }
+
+            // Check if the current cell can merge with the cell to the left
             if (col > 0 && current === $('#cell-' + (row * 4 + col - 1)).text()) {
                 return false;
             }
+
+            // Check if the current cell can merge with the cell to the right
             if (col < 3 && current === $('#cell-' + (row * 4 + col + 1)).text()) {
                 return false;
             }
