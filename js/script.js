@@ -243,7 +243,7 @@ function checkGameOver() {
             let current = $('#cell-' + (row * 4 + col)).text();
             if (row > 0 && current === $('#cell-' + ((row - 1) * 4 + col)).text()) {
                 return false;
-            } c c 
+            }
             if (row < 3 && current === $('#cell-' + ((row + 1) * 4 + col)).text()) {
                 return false;
             }
