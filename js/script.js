@@ -4,7 +4,7 @@ $(document).ready(function() {
     initializeGrid();
 
     // Add initial numbers
-    addInitialNumber();
+    addNewNumber();
     addNewNumber();
 
     // Handle keydown events
@@ -52,15 +52,6 @@ function initializeGrid() {
 }
 
 /**
- * Adds an initial number (2 or 4) to a random cell in the grid.
- */
-function addInitialNumber() {
-    const randomCell = Math.floor(Math.random() * 16);
-    const initialValue = Math.random() < 0.80 ? 2 : 4;
-    $('#cell-' + randomCell).text(initialValue).attr('class', 'grid-cell number-' + initialValue);
-}
-
-/**
  * Adds a new number (2 or 4) to a random empty cell in the grid.
  */
 function addNewNumber() {
@@ -93,7 +84,7 @@ function resetGame() {
     for (let i = 0; i < 16; i++) {
         $('#cell-' + i).text("").attr('class', 'grid-cell');
     }
-    addInitialNumber();
+    addNewNumber();
     addNewNumber();
 }
 
@@ -252,7 +243,7 @@ function checkGameOver() {
             let current = $('#cell-' + (row * 4 + col)).text();
             if (row > 0 && current === $('#cell-' + ((row - 1) * 4 + col)).text()) {
                 return false;
-            }
+            } c c 
             if (row < 3 && current === $('#cell-' + ((row + 1) * 4 + col)).text()) {
                 return false;
             }
