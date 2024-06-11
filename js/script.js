@@ -1,4 +1,5 @@
 let score = 0;
+const winningNumber = 2048;
 $(document).ready(function() {
     // Initialize the game grid
     initializeGrid();
@@ -237,7 +238,7 @@ function merge(cells) {
             updateScore();
 
 
-            if (newValue === 2048) { 
+            if (newValue === winningNumber) { 
                 setTimeout(() => { alert("Congratulations! You win!"); }, 1000);
             }
         } else {
