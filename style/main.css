@@ -36,6 +36,11 @@ header {
     gap: 10px;
 }
 
+#how-to {
+    background-color: rgb(199, 194, 194);
+    color: #000;
+}
+
 .grid-cell {
     width: 100%;
     height: 100%;
