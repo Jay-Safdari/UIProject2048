@@ -6,6 +6,7 @@ $(document).ready(function() {
     // Add initial numbers
     addNewNumber();
     addNewNumber();
+    //sdfsdf
 
     // Handle keydown events
     $(document).keydown(function(event) {
